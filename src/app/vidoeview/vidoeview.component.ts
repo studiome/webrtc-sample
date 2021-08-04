@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-vidoeview',
@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vidoeview.component.scss']
 })
 export class VidoeviewComponent implements OnInit {
-
+  @ViewChild('videoview') cameraView!: ElementRef<HTMLVideoElement>;
   constructor() { }
 
-  ngOnInit(): void {
-  }
 
+  ngOnInit(): void {
+    const self: this = this;
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(function (stream) {
+      self.cameraView.nativeElement.srcObject = stream;
+    });
+  }
 }
