@@ -12,7 +12,13 @@ export class VidoeviewComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     let _cv = this.cameraView?.nativeElement;
     if (_cv) {
-      navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(function (stream) {
+      navigator.mediaDevices.getUserMedia({
+        video: {
+          'width': {
+            'min': 720, 'ideal': 1280, 'max': 1920
+          }
+        }, audio: false
+      }).then(function (stream) {
         _cv!.srcObject = stream;
       });
     }
